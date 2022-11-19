@@ -1,5 +1,5 @@
 import random
-choice = ['', 'n', 'b']
+choice = ['k', 'n', 'b']
 count = [0, 0]
 def check_answer(t):
     if t == "k":
@@ -9,7 +9,7 @@ def check_answer(t):
     elif t == "n":
         print("nozhnicy")
 def main():
-    while True:
+    while checkTotalScore():
         turn = input("Please enter your turn: ('k', 'n', 'b'): ").lower()
         if turn == "exit":
             break
@@ -17,15 +17,29 @@ def main():
             check_answer(turn)
         c_turn = random.choice(choice)
         check_answer(c_turn)
-        if turn == "k" and c_turn == "n" or turn == "b" and c_turn == "k" or turn == "n" and c_turn == "b":
-            print("you win")
-            count[0] += 1
-        elif c_turn == "k" and turn == "n" or c_turn == "b" and turn == "k" or c_turn == "n" and turn == "b":
-            print("comp win")
-            count[1] += 1
-        print("score:", *count)
-        if turn == "k" and c_turn == "k" or turn == "b" and c_turn == "b" or turn == "n" and c_turn == "n":
-            print("draw")
-        
+        score(turn,c_turn)
+
+def checkTotalScore():
+    if count[0] == 3:
+        return False
+    if count[1] == 3:
+        return False
+    return True
+
+def score (turn, c_turn):
+    if turn == "k" and c_turn == "n" or turn == "b" and c_turn == "k" or turn == "n" and c_turn == "b":
+        print("you win")
+        count[0] += 1
+    elif c_turn == "k" and turn == "n" or c_turn == "b" and turn == "k" or c_turn == "n" and turn == "b":
+        print("comp win")
+        count[1] += 1
+    print("score:", *count)
+    if turn == "k" and c_turn == "k" or turn == "b" and c_turn == "b" or turn == "n" and c_turn == "n":
+        print("draw")
+
+    if(count[0] > count[1] and count[0] == 3):
+        print("You win the game")
+    if(count[1] > count[0] and count[1] == 3):
+        print("PC win the game")
 main()
 
